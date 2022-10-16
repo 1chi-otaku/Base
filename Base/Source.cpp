@@ -22,9 +22,8 @@ void LeaveTruck(Truck* p1, int truck_count, int index);
 
 int main() {
 	srand(time(NULL));
-	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	Base base(500, 1000);
+	Base base(320,128.20);
 	int vehicle_count, bus_count, truck_count;
 	cout << "Enter Vehicle count: ";
 	cin >> vehicle_count;
@@ -38,7 +37,7 @@ int main() {
 	
 	int input = -3;
 	
-	while (input != -2)
+	while (input != 0)
 	{
 		PrintMenu();
 		cin >> input;
@@ -144,6 +143,8 @@ int main() {
 			system("cls");
 			base.Init();
 			break;
+		case 0:
+			break;
 		}
 		
 
@@ -152,10 +153,6 @@ int main() {
 
 	}
 	
-	
-
-
-
 	delete[]veh;
 	delete[]trk;
 	delete[]bus;
@@ -176,6 +173,7 @@ void PrintMenu()
 	cout << "5 - Choose a specific transport to arrive!" << endl;
 	cout << "6 - Choose a specific transport to leave!" << endl;
 	cout << "7 - Edit Base" << endl;
+	cout << "0 - Exit" << endl;
 	cout << ": ";
 }
 
