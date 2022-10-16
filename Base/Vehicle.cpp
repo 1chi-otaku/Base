@@ -33,7 +33,7 @@ void Vehicle::Print()
     cout << "Petrol - " << petrol_amount << endl;
     cout << "Tank Volume - " << tank_volume << endl;
     cout << "Is free? - ";
-    if (isFree()) cout << "Yes" << endl;
+    if (is_free)cout << "Yes" << endl;
     else cout << "No" << endl;
 }
 
