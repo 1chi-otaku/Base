@@ -3,7 +3,6 @@
 #include "Vehicle.h"
 #include "Bus.h"
 #include "Truck.h"
-
 #include <windows.h>
 
 using namespace std;
@@ -12,13 +11,9 @@ void PrintMenu();
 void ArriveAll(Vehicle* p1, int veh_count, Bus* p2, int bus_count, Truck* p3, int trk_count);
 void LeaveAll(Vehicle* p1, int veh_count, Bus* p2, int bus_count, Truck* p3, int trk_count);
 void ShowAll(Vehicle* p1, int veh_count, Bus* p2, int bus_count, Truck* p3, int trk_count);
-void ArriveVehicle(Vehicle* p1, int veh_count, int index);
-void ArriveBus(Bus* p1, int bus_count, int index);
-void ArriveTruck(Truck* p1, int truck_count, int index);
+void ArriveVehicle(Vehicle* p1, int count, int index);
+void LeaveVehicle(Vehicle* p1, int count, int index);
 
-void LeaveVehicle(Vehicle* p1, int veh_count, int index);
-void LeaveBus(Bus* p1, int bus_count, int index);
-void LeaveTruck(Truck* p1, int truck_count, int index);
 
 int main() {
 	srand(time(NULL));
@@ -81,14 +76,14 @@ int main() {
 				cout << "Enter number of bus you want to arrive to the base: " << endl;
 				cin >> input;
 				cout << endl;
-				ArriveBus(bus, bus_count, input);
+				ArriveVehicle(bus, bus_count, input);
 				system("pause");
 				break;
 			case 3:
 				cout << "Enter number of bus you want to arrive to the base: " << endl;
 				cin >> input;
 				cout << endl;
-				ArriveTruck(trk, truck_count, input);
+				ArriveVehicle(trk, truck_count, input);
 				system("pause");
 				break;
 			default:
@@ -121,14 +116,14 @@ int main() {
 				cout << "Enter number of bus you want to leave to the base: " << endl;
 				cin >> input;
 				cout << endl;
-				LeaveBus(bus, bus_count, input);
+				ArriveVehicle(bus, bus_count, input);
 				system("pause");
 				break;
 			case 3:
 				cout << "Enter number of bus you want to leave to the base: " << endl;
 				cin >> input;
 				cout << endl;
-				LeaveTruck(trk, truck_count, input);
+				ArriveVehicle(trk, truck_count, input);
 				system("pause");
 				break;
 			default:
@@ -147,18 +142,11 @@ int main() {
 			break;
 		}
 		
-
-
-			
-
 	}
 	
 	delete[]veh;
 	delete[]trk;
 	delete[]bus;
-	
-
-	
 	return 0;
 }
 
@@ -176,7 +164,6 @@ void PrintMenu()
 	cout << "0 - Exit" << endl;
 	cout << ": ";
 }
-
 void ArriveAll(Vehicle* p1, int veh_count, Bus* p2, int bus_count, Truck* p3, int trk_count)
 {
 	system("cls");
@@ -249,10 +236,9 @@ void ShowAll(Vehicle* p1, int veh_count, Bus* p2, int bus_count, Truck* p3, int 
 	}
 	system("pause");
 }
-
-void ArriveVehicle(Vehicle* p1, int veh_count, int index)
+void ArriveVehicle(Vehicle* p1, int count, int index)
 {
-	for (int i = 0; i < veh_count; i++)
+	for (int i = 0; i < count; i++)
 	{
 		if (index-1 == i) {
 			if ((p1+i)->isFree()) {
@@ -265,70 +251,9 @@ void ArriveVehicle(Vehicle* p1, int veh_count, int index)
 	}
 	cout << "Failed." << endl;
 }
-void ArriveBus(Bus* p1, int bus_count, int index)
+void LeaveVehicle(Vehicle* p1, int count, int index)
 {
-	for (int i = 0; i < bus_count; i++)
-	{
-		if (index - 1 == i) {
-			if ((p1+i)->isFree()) {
-				(p1 + i)->arrive();
-				cout << "Success!" << endl;
-				return;
-			}
-		}
-
-	}
-	cout << "Failed." << endl;
-}
-void ArriveTruck(Truck* p1, int truck_count, int index)
-{
-	for (int i = 0; i < truck_count; i++)
-	{
-		if (index - 1 == i) {
-			if ((p1+i)->isFree()) {
-				(p1 + i)->arrive();
-				cout << "Success!" << endl;
-				return;
-			}
-		}
-
-	}
-	cout << "Failed." << endl;
-}
-
-void LeaveVehicle(Vehicle* p1, int veh_count, int index)
-{
-	for (int i = 0; i < veh_count; i++)
-	{
-		if (index - 1 == i) {
-			if (!(p1+i)->isFree()) {
-				(p1 + i)->leave();
-				cout << "Success!" << endl;
-				return;
-			}
-		}
-
-	}
-	cout << "Failed." << endl;
-}
-void LeaveBus(Bus* p1, int bus_count, int index)
-{
-	for (int i = 0; i < bus_count; i++)
-	{
-		if (index - 1 == i) {
-			if (!(p1+i)->isFree()) {
-				(p1 + i)->leave();
-				cout << "Success!" << endl;
-				return;
-			}
-		}
-
-	}
-	cout << "Failed." << endl;
-}
-void LeaveTruck(Truck* p1, int truck_count, int index)
-{
-	for (int i = 0; i < truck_count; i++)
+	for (int i = 0; i < count; i++)
 	{
 		if (index - 1 == i) {
 			if (!(p1+i)->isFree()) {
