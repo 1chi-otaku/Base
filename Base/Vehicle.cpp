@@ -8,7 +8,6 @@ Vehicle::Vehicle()
     tank_volume = 150;
     is_free = true;
 }
-
 Vehicle::Vehicle(double petrol_amount, double tank_volume)
 {
     this->petrol_amount = petrol_amount;
@@ -17,7 +16,6 @@ Vehicle::Vehicle(double petrol_amount, double tank_volume)
 }
 double Vehicle::getTankVolume() { return tank_volume; }
 double Vehicle::getPetrolAmount(){return petrol_amount;}
-
 void Vehicle::arrive()
 {
     if (!is_free)return;
@@ -27,7 +25,6 @@ void Vehicle::arrive()
 
     is_free = false;
 }
-
 void Vehicle::Print()
 {
     cout << "Petrol - " << petrol_amount << endl;
@@ -36,12 +33,10 @@ void Vehicle::Print()
     if (is_free)cout << "Yes" << endl;
     else cout << "No" << endl;
 }
-
 bool Vehicle::isFree()
 {
     return is_free;
 }
-
 bool Vehicle::leave()
 {
     if (is_free)return false;

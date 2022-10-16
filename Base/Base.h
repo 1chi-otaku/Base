@@ -7,7 +7,7 @@ class Base
 	static double petrol_on_base; //количество бензина на местной "заправке" (в литрах);
 	static double goods_on_base; //количество "груза" - различных материальных ценностей(в тоннах).
 public:
-	Base(double petrol, double goods);
+	Base(double petrol, double goods);     
 	int static Get_people_on_base();
 	int static Get_vehicles_on_base();
 	double static Get_petrol_on_base();

@@ -7,30 +7,37 @@
 
 using namespace std;
 
-void PrintMenu();
-void ArriveAll(Vehicle* p1, int veh_count, Bus* p2, int bus_count, Truck* p3, int trk_count);
-void LeaveAll(Vehicle* p1, int veh_count, Bus* p2, int bus_count, Truck* p3, int trk_count);
-void ShowAll(Vehicle* p1, int veh_count, Bus* p2, int bus_count, Truck* p3, int trk_count);
-void ArriveVehicle(Vehicle* p1, int count, int index);
-void LeaveVehicle(Vehicle* p1, int count, int index);
+void PrintMenu(); //Prints all the trasnport.
+void ArriveAll(Vehicle* p1, int veh_count, Bus* p2, int bus_count, Truck* p3, int trk_count); //Arrives all the transport on the base if it's possible.
+void LeaveAll(Vehicle* p1, int veh_count, Bus* p2, int bus_count, Truck* p3, int trk_count);  //Removes all the transport from the base if it's possible.
+void ShowAll(Vehicle* p1, int veh_count, Bus* p2, int bus_count, Truck* p3, int trk_count);   //Shows all the transport.
+void ArriveVehicle(Vehicle* p1, int count, int index);										  //Arrives a specific transport to the base.
+void LeaveVehicle(Vehicle* p1, int count, int index);										  //Removes a specific transport from the base.
 
 
 int main() {
 	srand(time(NULL));
 
-	Base base(320,128.20);
+	Base base(320, 128.20);
+
 	int vehicle_count, bus_count, truck_count;
 	cout << "Enter Vehicle count: ";
 	cin >> vehicle_count;
-	Vehicle* veh = new Vehicle[vehicle_count];
 	cout << "Enter Bus count: ";
 	cin >> bus_count;
-	Bus* bus = new Bus[bus_count];
 	cout << "Enter Truck count: ";
 	cin >> truck_count;
+	if (vehicle_count < 0 || bus_count < 0 || truck_count < 0) {
+		cout << "Negative value was noticed. Setting the values to 0..." << endl;
+		vehicle_count = bus_count = truck_count = 0;
+		system("pause");
+	}
+
+	Vehicle* veh = new Vehicle[vehicle_count];
+	Bus* bus = new Bus[bus_count];
 	Truck* trk = new Truck[truck_count];
-	
-	int input = -3;
+
+	int input = -1;
 	
 	while (input != 0)
 	{
@@ -140,7 +147,12 @@ int main() {
 			break;
 		case 0:
 			break;
+		default:
+			system("cls");
+			cout << "Something went wrong..." << endl;
+			system("pause");
 		}
+	
 		
 	}
 	

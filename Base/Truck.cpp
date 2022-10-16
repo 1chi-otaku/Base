@@ -6,23 +6,19 @@ Truck::Truck():Vehicle()
 	max_load = 30;
 	current_load = 22;
 }
-
 Truck::Truck(double load, double max_load, double petrol, double max_petrol):Vehicle(petrol,max_petrol)
 {
 	this->max_load = load;
 	current_load = max_load;
 }
-
 double Truck::getCurrentLoad(){return current_load;}
 double Truck::getMaxLoad(){return max_load;}
-
 void Truck::Print()
 {
 	Vehicle::Print();
 	cout << "Max load - " << max_load << endl;
 	cout << "Current load - " << current_load << endl;
 }
-
 bool Truck::leave()
 {
 	if (is_free)return false;
@@ -51,7 +47,6 @@ bool Truck::leave()
 	Base::Set_people_on_base(Base::Get_people_on_base() - 1);
 	is_free = true;
 }
-
 void Truck::arrive()
 {
 	if (!is_free)return;
