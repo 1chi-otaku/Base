@@ -3,7 +3,9 @@
 #include "Vehicle.h"
 #include "Bus.h"
 #include "Truck.h"
-#include "new"
+
+#include <windows.h>
+
 using namespace std;
 
 void PrintMenu();
@@ -20,7 +22,8 @@ void LeaveTruck(Truck* p1, int truck_count, int index);
 
 int main() {
 	srand(time(NULL));
-	
+	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+
 	Base base(500, 1000);
 	int vehicle_count, bus_count, truck_count;
 	cout << "Enter Vehicle count: ";
@@ -86,7 +89,7 @@ int main() {
 				cout << "Enter number of bus you want to arrive to the base: " << endl;
 				cin >> input;
 				cout << endl;
-				ArriveBus(bus, bus_count, input);
+				ArriveTruck(trk, truck_count, input);
 				system("pause");
 				break;
 			default:
@@ -95,6 +98,7 @@ int main() {
 				break;
 
 			}
+			break;
 		case 6:
 			system("cls");
 			if (vehicle_count == 0 && bus_count == 0 && truck_count == 0) {
@@ -125,7 +129,7 @@ int main() {
 				cout << "Enter number of bus you want to leave to the base: " << endl;
 				cin >> input;
 				cout << endl;
-				LeaveBus(bus, bus_count, input);
+				LeaveTruck(trk, truck_count, input);
 				system("pause");
 				break;
 			default:
@@ -135,7 +139,15 @@ int main() {
 			}
 
 			break;
+
+		case 7:
+			system("cls");
+			base.Init();
+			break;
 		}
+		
+
+
 			
 
 	}
@@ -163,6 +175,7 @@ void PrintMenu()
 	cout << "4 - Remove all vehicles from the base!" << endl;
 	cout << "5 - Choose a specific transport to arrive!" << endl;
 	cout << "6 - Choose a specific transport to leave!" << endl;
+	cout << "7 - Edit Base" << endl;
 	cout << ": ";
 }
 
@@ -172,15 +185,15 @@ void ArriveAll(Vehicle* p1, int veh_count, Bus* p2, int bus_count, Truck* p3, in
 	cout << "Arrived!" << endl;
 	for (int i = 0; i < veh_count; i++)
 	{
-		if(p1->isFree())(p1 + i)->arrive();
+		if((p1+i)->isFree())(p1 + i)->arrive();
 	}
 	for (int i = 0; i < bus_count; i++)
 	{
-		if (p2->isFree())(p2 + i)->arrive();
+		if ((p2+i)->isFree())(p2 + i)->arrive();
 	}
 	for (int i = 0; i < trk_count; i++)
 	{
-		if (p3->isFree())(p3 + i)->arrive();
+		if ((p3+i)->isFree())(p3 + i)->arrive();
 	}
 	system("pause");
 }
@@ -189,42 +202,52 @@ void LeaveAll(Vehicle* p1, int veh_count, Bus* p2, int bus_count, Truck* p3, int
 	system("cls");
 	for (int i = 0; i < veh_count; i++)
 	{
-		if (!p1->isFree())(p1 + i)->leave();
+		if (!(p1+i)->isFree())(p1 + i)->leave();
 	}
 	for (int i = 0; i < bus_count; i++)
 	{
-		if (!p2->isFree())(p2 + i)->leave();
+		if (!(p2+i)->isFree())(p2 + i)->leave();
 	}
 	for (int i = 0; i < trk_count; i++)
 	{
-		if (!p3->isFree())(p3 + i)->leave();
+		if (!(p3+i)->isFree())(p3 + i)->leave();
 	}
 	cout << "Success!" << endl;
 	system("pause");
 }
 void ShowAll(Vehicle* p1, int veh_count, Bus* p2, int bus_count, Truck* p3, int trk_count)
 {
+	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 	system("cls");
 	if(veh_count > 0)cout << "-------------VEHICLES-------------" << endl;
 	for (int i = 0; i < veh_count; i++)
 	{
+		if((p1+i)->isFree())SetConsoleTextAttribute(h, 10);
+		else SetConsoleTextAttribute(h, 12);
 		cout << "Vehicle #" << i + 1 << ")" << endl;
 		(p1 + i)->Print();
 		cout << endl;
+		SetConsoleTextAttribute(h, 15);
 	}
 	if (bus_count > 0)cout << "---------------BUS---------------" << endl;
 	for (int i = 0; i < bus_count; i++)
 	{
+		if ((p2 + i)->isFree())SetConsoleTextAttribute(h, 10);
+		else SetConsoleTextAttribute(h, 12);
 		cout << "Bus #" << i + 1 << ")" << endl;
 		(p2 + i)->Print();
 		cout << endl;
+		SetConsoleTextAttribute(h, 15);
 	}
 	if (trk_count > 0)cout << "-------------TRUCKS--------------" << endl;
 	for (int i = 0; i < trk_count; i++)
 	{
+		if ((p3 + i)->isFree())SetConsoleTextAttribute(h, 10);
+		else SetConsoleTextAttribute(h, 12);
 		cout << "Truck #" << i + 1 << ")" << endl;
 		(p3 + i)->Print();
 		cout << endl;
+		SetConsoleTextAttribute(h, 15);
 	}
 	system("pause");
 }
@@ -234,7 +257,7 @@ void ArriveVehicle(Vehicle* p1, int veh_count, int index)
 	for (int i = 0; i < veh_count; i++)
 	{
 		if (index-1 == i) {
-			if (p1->isFree()) {
+			if ((p1+i)->isFree()) {
 				(p1 + i)->arrive();
 				cout << "Success!" << endl;
 				return;
@@ -249,7 +272,7 @@ void ArriveBus(Bus* p1, int bus_count, int index)
 	for (int i = 0; i < bus_count; i++)
 	{
 		if (index - 1 == i) {
-			if (p1->isFree()) {
+			if ((p1+i)->isFree()) {
 				(p1 + i)->arrive();
 				cout << "Success!" << endl;
 				return;
@@ -264,7 +287,7 @@ void ArriveTruck(Truck* p1, int truck_count, int index)
 	for (int i = 0; i < truck_count; i++)
 	{
 		if (index - 1 == i) {
-			if (p1->isFree()) {
+			if ((p1+i)->isFree()) {
 				(p1 + i)->arrive();
 				cout << "Success!" << endl;
 				return;
@@ -280,7 +303,7 @@ void LeaveVehicle(Vehicle* p1, int veh_count, int index)
 	for (int i = 0; i < veh_count; i++)
 	{
 		if (index - 1 == i) {
-			if (!p1->isFree()) {
+			if (!(p1+i)->isFree()) {
 				(p1 + i)->leave();
 				cout << "Success!" << endl;
 				return;
@@ -295,7 +318,7 @@ void LeaveBus(Bus* p1, int bus_count, int index)
 	for (int i = 0; i < bus_count; i++)
 	{
 		if (index - 1 == i) {
-			if (!p1->isFree()) {
+			if (!(p1+i)->isFree()) {
 				(p1 + i)->leave();
 				cout << "Success!" << endl;
 				return;
@@ -310,7 +333,7 @@ void LeaveTruck(Truck* p1, int truck_count, int index)
 	for (int i = 0; i < truck_count; i++)
 	{
 		if (index - 1 == i) {
-			if (!p1->isFree()) {
+			if (!(p1+i)->isFree()) {
 				(p1 + i)->leave();
 				cout << "Success!" << endl;
 				return;

@@ -17,6 +17,7 @@ public:
 	void static Set_petrol_on_base(double new_data);
 	void static Set_goods_on_base(double new_data);
 	void Print();
+	void Init();
 	~Base();
 };
 
